@@ -13,7 +13,7 @@ bot.
 """
 import logging
 from environs import Env
-from telegram import Update, ForceReply
+from telegram import Update, ForceReply, ReplyKeyboardMarkup
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 
 # Enable logging
@@ -29,9 +29,12 @@ logger = logging.getLogger(__name__)
 def start(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /start is issued."""
     user = update.effective_user
+    custom_keyboard = [['Новый вопрос', 'Сдаться'],
+                       ['Мой счёт']]
+    reply_markup = ReplyKeyboardMarkup(custom_keyboard)
     update.message.reply_markdown_v2(
-        fr'Hi {user.mention_markdown_v2()}\!',
-        reply_markup=ForceReply(selective=True),
+        fr'Здравствуйте, {user.mention_markdown_v2()}\! Я бот для викторин\!',
+        reply_markup=reply_markup,
     )
 
 
